@@ -162,6 +162,50 @@ const VERSION_PATCHES = {
       replace: '$=!0;if(z!=="disabled"&&!Y&&w)$=z==="enabled"||Zn8()',
     },
   ],
+  '2.1.109': [
+    {
+      id: 'provider-check',
+      desc: 'modelSupportsAutoMode — bypass provider check',
+      search:  'if(Y!=="firstParty"&&Y!=="anthropicAws")return!1',
+      replace: 'if(Y!=="firstParty"&&Y!=="anthropicAws")return!0',
+    },
+    {
+      id: 'model-regex',
+      desc: 'modelSupportsAutoMode — bypass model regex check',
+      search:  '/^claude-(opus|sonnet)-4-6/.test(K)}return!1}',
+      replace: '/^claude-(opus|sonnet)-4-6/.test(K)}return!0}',
+    },
+    {
+      id: 'model-return',
+      desc: 'modelSupportsAutoMode — regex return always true',
+      search:  'return/^claude-(opus|sonnet)-4-6/.test(K)',
+      replace: 'return!0                                 ',
+    },
+    {
+      id: 'gate-enabled',
+      desc: 'isAutoModeGateEnabled — always return true',
+      search:  'function KL(){if(MG?.isAutoModeCircuitBroken()??!1)return!1;if(Jz7())return!1;if(!zV6(D5()))return!1;return!0}',
+      replace: 'function KL(){if(MG?.isAutoModeCircuitBroken()??!1)return!0;if(Jz7())return!0;if(!zV6(D5()))return!0;return!0}',
+    },
+    {
+      id: 'circuit-broken',
+      desc: 'isAutoModeCircuitBroken — always return false',
+      search:  'function lAY(){return $M6.circuitBroken}',
+      replace: 'function lAY(){return !1               }',
+    },
+    {
+      id: 'can-enter',
+      desc: 'verifyAutoModeGateAccess — force canEnterAuto happy path',
+      search:  'if(j)return{updateContext:(f)=>J(f,$)};let X;',
+      replace: 'if(1)return{updateContext:(f)=>J(f,$)};let X;',
+    },
+    {
+      id: 'carousel',
+      desc: 'carouselAvailable — always true (enables Shift+Tab cycling)',
+      search:  '$=!1;if(z!=="disabled"&&!Y&&w)$=z==="enabled"||fl8()',
+      replace: '$=!0;if(z!=="disabled"&&!Y&&w)$=z==="enabled"||fl8()',
+    },
+  ],
   '2.1.96': [
     {
       id: 'provider-check',
